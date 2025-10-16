@@ -1,4 +1,4 @@
-package main.java.com.trendfeed.backend.config;
+package com.trendfeed.backend.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

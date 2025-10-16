@@ -1,4 +1,4 @@
-package main.java.com.trendfeed.backend.entity;
+package com.trendfeed.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

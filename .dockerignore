@@ -1,0 +1,17 @@
+# VCS
+.git
+.gitignore
+
+# Gradle
+.gradle
+build
+
+# IDE
+.idea
+.vscode
+*.iml
+
+# Logs / OS
+*.log
+.DS_Store
+Thumbs.db

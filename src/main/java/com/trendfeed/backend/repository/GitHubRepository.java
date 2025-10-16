@@ -1,4 +1,4 @@
-package main.java.com.trendfeed.backend.repository;
+package com.trendfeed.backend.repository;
 
 import com.trendfeed.backend.entity.GitHubEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

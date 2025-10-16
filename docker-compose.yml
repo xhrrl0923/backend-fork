@@ -1,8 +1,6 @@
-version: "3.8"
-
 services:
   postgres:
-    image: postgres:15
+    image: postgres:16
     container_name: trendfeed-postgres
     restart: always
     environment:
@@ -10,23 +8,31 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5432:5432"   # 로컬 충돌 나면 "55432:5432"로 변경
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d backend_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   backend:
-    build: .                          
+    build: .                          # 멀티스테이지 Dockerfile 전제
     container_name: trendfeed-backend
     restart: always
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/backend_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      GITHUB_TOKEN: ${GITHUB_TOKEN}   # ← 로컬 환경변수에서 주입
+      # (옵션) 스케줄 잠깐 끄기: spring.task.scheduling.enabled=false
+      # (옵션) 크론/페이지 등: crawler.cron=0 0 */3 * * *
     ports:
       - "8080:8080"
-
 
 volumes:
   pgdata:
